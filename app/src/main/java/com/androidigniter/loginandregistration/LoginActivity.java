@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private String email;
     private String password;
     private ProgressDialog pDialog;
-    private String login_url = "http://158.39.188.215/branch/teste/gruppe15/oblig1/php/loginUserFromDatabase.php";
+    private String login_url = "http://158.39.188.215/webapp/login.php";
     private SessionHandler session;
 
     @Override

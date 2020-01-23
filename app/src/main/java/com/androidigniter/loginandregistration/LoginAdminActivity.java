@@ -21,16 +21,15 @@ import org.json.JSONObject;
 public class LoginAdminActivity extends AppCompatActivity {
     private static final String KEY_STATUS = "status";
     private static final String KEY_MESSAGE = "message";
-    private static final String KEY_FULL_NAME = "full_name";
-    private static final String KEY_EMAIL = "email";
+    private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_EMPTY = "";
-    private EditText etEmail;
-    private EditText etPassword;
-    private String email;
+    private EditText etLoginUsernameAdmin;
+    private EditText etLoginPasswordAdmin;
+    private String username;
     private String password;
     private ProgressDialog pDialog;
-    private String login_url = "http://158.39.188.215/branch/teste/gruppe15/oblig1/php/loginUserFromDatabase.php";
+    private String login_url = "http://158.39.188.215/branch/teste/gruppe15/oblig1/php/loginAdminFromDatabase.php";
     private SessionHandler session;
 
     @Override
@@ -41,30 +40,20 @@ public class LoginAdminActivity extends AppCompatActivity {
         if(session.isLoggedIn()){
             loadDashboard();
         }
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_loginadmin);
 
-        etEmail = findViewById(R.id.etLoginEmail);
-        etPassword = findViewById(R.id.etLoginPassword);
+        etLoginUsernameAdmin = findViewById(R.id.etLoginUsernameAdmin);
+        etLoginPasswordAdmin = findViewById(R.id.etLoginPasswordAdmin);
 
         Button register = findViewById(R.id.btnLoginRegister);
         Button login = findViewById(R.id.btnLogin);
-
-        //Launch Registration screen when Register Button is clicked
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Retrieve the data entered in the edit texts
-                email = etEmail.getText().toString().toLowerCase().trim();
-                password = etPassword.getText().toString().trim();
+                username = etLoginUsernameAdmin.getText().toString().toLowerCase().trim();
+                password = etLoginPasswordAdmin.getText().toString().trim();
                 if (validateInputs()) {
                     login();
                 }
@@ -87,7 +76,7 @@ public class LoginAdminActivity extends AppCompatActivity {
      */
 
     private void displayLoader() {
-        pDialog = new ProgressDialog(LoginActivity.this);
+        pDialog = new ProgressDialog(LoginAdminActivity.this);
         pDialog.setMessage("Logging In.. Please wait...");
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(false);
@@ -100,7 +89,7 @@ public class LoginAdminActivity extends AppCompatActivity {
         JSONObject request = new JSONObject();
         try {
             //Populate the request parameters
-            request.put(KEY_EMAIL, email);
+            request.put(KEY_USERNAME, username);
             request.put(KEY_PASSWORD, password);
 
         } catch (JSONException e) {
@@ -115,7 +104,7 @@ public class LoginAdminActivity extends AppCompatActivity {
                             //Check if user got logged in successfully
 
                             if (response.getInt(KEY_STATUS) == 0) {
-                                session.loginUser(email,response.getString(KEY_FULL_NAME));
+                                session.loginUser(username,response.getString(KEY_USERNAME));
                                 loadDashboard();
 
                             }else{
@@ -149,14 +138,14 @@ public class LoginAdminActivity extends AppCompatActivity {
      * @return
      */
     private boolean validateInputs() {
-        if(KEY_EMPTY.equals(email)){
-            etEmail.setError("Email cannot be empty");
-            etEmail.requestFocus();
+        if(KEY_EMPTY.equals(username)){
+            etLoginUsernameAdmin.setError("Email cannot be empty");
+            etLoginUsernameAdmin.requestFocus();
             return false;
         }
         if(KEY_EMPTY.equals(password)){
-            etPassword.setError("Password cannot be empty");
-            etPassword.requestFocus();
+            etLoginPasswordAdmin.setError("Password cannot be empty");
+            etLoginPasswordAdmin.requestFocus();
             return false;
         }
         return true;
