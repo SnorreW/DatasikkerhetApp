@@ -1,5 +1,6 @@
 package com.androidigniter.loginandregistration;
 
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,18 +18,19 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginForeleserActivity extends AppCompatActivity {
+public class LoginAdminActivity extends AppCompatActivity {
     private static final String KEY_STATUS = "status";
     private static final String KEY_MESSAGE = "message";
+    private static final String KEY_FULL_NAME = "full_name";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_EMPTY = "";
-    private EditText etLoginEmailLecturer;
-    private EditText etLoginPasswordLecturer;
-    private String emailLecturer;
-    private String passwordLecturer;
+    private EditText etEmail;
+    private EditText etPassword;
+    private String email;
+    private String password;
     private ProgressDialog pDialog;
-    private String login_url = "http://158.39.188.215/branch/teste/gruppe15/oblig1/php/loginLecturerFromDatabase.php";
+    private String login_url = "http://158.39.188.215/branch/teste/gruppe15/oblig1/php/loginUserFromDatabase.php";
     private SessionHandler session;
 
     @Override
@@ -39,10 +41,10 @@ public class LoginForeleserActivity extends AppCompatActivity {
         if(session.isLoggedIn()){
             loadDashboard();
         }
-        setContentView(R.layout.activity_loginlecturer);
+        setContentView(R.layout.activity_login);
 
-        etLoginEmailLecturer = findViewById(R.id.etLoginEmailLectur);
-        etLoginPasswordLecturer = findViewById(R.id.etLoginPassword);
+        etEmail = findViewById(R.id.etLoginEmail);
+        etPassword = findViewById(R.id.etLoginPassword);
 
         Button register = findViewById(R.id.btnLoginRegister);
         Button login = findViewById(R.id.btnLogin);
@@ -51,7 +53,7 @@ public class LoginForeleserActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LoginForeleserActivity.this, RegisterForeleserActivity.class);
+                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(i);
                 finish();
             }
@@ -61,8 +63,8 @@ public class LoginForeleserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Retrieve the data entered in the edit texts
-                emailLecturer = etLoginEmailLecturer.getText().toString().toLowerCase().trim();
-                passwordLecturer = etLoginPasswordLecturer.getText().toString().trim();
+                email = etEmail.getText().toString().toLowerCase().trim();
+                password = etPassword.getText().toString().trim();
                 if (validateInputs()) {
                     login();
                 }
@@ -85,7 +87,7 @@ public class LoginForeleserActivity extends AppCompatActivity {
      */
 
     private void displayLoader() {
-        pDialog = new ProgressDialog(LoginForeleserActivity.this);
+        pDialog = new ProgressDialog(LoginActivity.this);
         pDialog.setMessage("Logging In.. Please wait...");
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(false);
@@ -98,8 +100,8 @@ public class LoginForeleserActivity extends AppCompatActivity {
         JSONObject request = new JSONObject();
         try {
             //Populate the request parameters
-            request.put(KEY_EMAIL, emailLecturer);
-            request.put(KEY_PASSWORD, passwordLecturer);
+            request.put(KEY_EMAIL, email);
+            request.put(KEY_PASSWORD, password);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -113,7 +115,7 @@ public class LoginForeleserActivity extends AppCompatActivity {
                             //Check if user got logged in successfully
 
                             if (response.getInt(KEY_STATUS) == 0) {
-                                session.loginUser(emailLecturer,response.getString(KEY_EMAIL));
+                                session.loginUser(email,response.getString(KEY_FULL_NAME));
                                 loadDashboard();
 
                             }else{
@@ -147,14 +149,14 @@ public class LoginForeleserActivity extends AppCompatActivity {
      * @return
      */
     private boolean validateInputs() {
-        if(KEY_EMPTY.equals(emailLecturer)){
-            etLoginEmailLecturer.setError("Email cannot be empty");
-            etLoginEmailLecturer.requestFocus();
+        if(KEY_EMPTY.equals(email)){
+            etEmail.setError("Email cannot be empty");
+            etEmail.requestFocus();
             return false;
         }
-        if(KEY_EMPTY.equals(passwordLecturer)){
-            etLoginPasswordLecturer.setError("Password cannot be empty");
-            etLoginPasswordLecturer.requestFocus();
+        if(KEY_EMPTY.equals(password)){
+            etPassword.setError("Password cannot be empty");
+            etPassword.requestFocus();
             return false;
         }
         return true;

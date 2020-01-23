@@ -12,27 +12,26 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bruker login"
-        android:textColor="@android:color/white"
+        android:text="Admin login"
         android:textAppearance="?android:textAppearanceLarge"
         android:textStyle="bold"
+        android:textColor="@android:color/white"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         />
 
     <EditText
-        android:id="@+id/etLoginEmail"
+        android:id="@+id/etLoginUsernameAdmin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@android:color/white"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
+        android:hint="Username"
+        android:inputType="textPersonName"
         android:padding="10dp" />
 
-
     <EditText
-        android:id="@+id/etLoginPassword"
+        android:id="@+id/etLoginPasswordAdmin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -42,29 +41,12 @@
         android:padding="10dp" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnLoginAdmin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="#f05924"
-        android:text="Logg inn elev"
-        android:textColor="@android:color/white" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="@string/not_having_account"
-        android:textColor="#ccc" />
-
-    <Button
-        android:id="@+id/btnLoginRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="#aaa"
-        android:text="Registrer elev konto"
+        android:text="Logg inn admin"
         android:textColor="@android:color/white" />
 
 </LinearLayout>

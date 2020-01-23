@@ -7,21 +7,21 @@
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:padding="50dp"
-    tools:context="com.androidigniter.loginandregistration.LoginActivity">
+    tools:context="com.androidigniter.loginandregistration.LoginForeleserActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bruker login"
-        android:textColor="@android:color/white"
+        android:text="Foreleser login"
         android:textAppearance="?android:textAppearanceLarge"
         android:textStyle="bold"
+        android:textColor="@android:color/white"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         />
 
     <EditText
-        android:id="@+id/etLoginEmail"
+        android:id="@+id/etLoginEmailLectur"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -30,9 +30,8 @@
         android:inputType="textEmailAddress"
         android:padding="10dp" />
 
-
     <EditText
-        android:id="@+id/etLoginPassword"
+        android:id="@+id/etLoginPasswordLecturer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -42,12 +41,12 @@
         android:padding="10dp" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnLoginLecturer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="#f05924"
-        android:text="Logg inn elev"
+        android:text="Logg inn foreleser"
         android:textColor="@android:color/white" />
 
     <TextView
@@ -59,12 +58,12 @@
         android:textColor="#ccc" />
 
     <Button
-        android:id="@+id/btnLoginRegister"
+        android:id="@+id/btnLoginRegisterLecturer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="#aaa"
-        android:text="Registrer elev konto"
+        android:text="Registrer foreleser konto"
         android:textColor="@android:color/white" />
 
 </LinearLayout>
