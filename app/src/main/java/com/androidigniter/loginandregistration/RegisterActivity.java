@@ -21,19 +21,23 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String KEY_STATUS = "status";
     private static final String KEY_MESSAGE = "message";
     private static final String KEY_FULL_NAME = "full_name";
-    private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_STUDIERETNING = "studieretning";
+    private static final String KEY_YEAR = "year";
     private static final String KEY_EMPTY = "";
-    private EditText etUsername;
-    private EditText etPassword;
-    private EditText etConfirmPassword;
     private EditText etFullName;
-    private String username;
-    private String password;
-    private String confirmPassword;
+    private EditText etPassword;
+    private EditText etEmail;
+    private EditText etStudieretning;
+    private EditText etYear;
     private String fullName;
+    private String password;
+    private String email;
+    private String studieretning;
+    private String year;
     private ProgressDialog pDialog;
-    private String register_url = "http://192.168.0.101/member/register.php";
+    private String register_url = "http://158.39.188.215/branch/teste/gruppe15/oblig1/php/registerUserToDatabase.php";
     private SessionHandler session;
 
     @Override
@@ -42,10 +46,11 @@ public class RegisterActivity extends AppCompatActivity {
         session = new SessionHandler(getApplicationContext());
         setContentView(R.layout.activity_register);
 
-        etUsername = findViewById(R.id.etUsername);
-        etPassword = findViewById(R.id.etPassword);
-        etConfirmPassword = findViewById(R.id.etConfirmPassword);
         etFullName = findViewById(R.id.etFullName);
+        etPassword = findViewById(R.id.etPassword);
+        etEmail = findViewById(R.id.etEmail);
+        etStudieretning = findViewById(R.id.etStudieretning);
+        etYear = findViewById(R.id.etYear);
 
         Button login = findViewById(R.id.btnRegisterLogin);
         Button register = findViewById(R.id.btnRegister);
@@ -64,10 +69,11 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Retrieve the data entered in the edit texts
-                username = etUsername.getText().toString().toLowerCase().trim();
-                password = etPassword.getText().toString().trim();
-                confirmPassword = etConfirmPassword.getText().toString().trim();
                 fullName = etFullName.getText().toString().trim();
+                password = etPassword.getText().toString().trim();
+                email = etEmail.getText().toString().trim();
+                studieretning = etStudieretning.getText().toString().trim();
+                year = etYear.getText().toString().trim();
                 if (validateInputs()) {
                     registerUser();
                 }
@@ -104,9 +110,11 @@ public class RegisterActivity extends AppCompatActivity {
         JSONObject request = new JSONObject();
         try {
             //Populate the request parameters
-            request.put(KEY_USERNAME, username);
-            request.put(KEY_PASSWORD, password);
             request.put(KEY_FULL_NAME, fullName);
+            request.put(KEY_PASSWORD, password);
+            request.put(KEY_EMAIL, email);
+            request.put(KEY_STUDIERETNING, studieretning);
+            request.put(KEY_YEAR, year);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -120,13 +128,13 @@ public class RegisterActivity extends AppCompatActivity {
                             //Check if user got registered successfully
                             if (response.getInt(KEY_STATUS) == 0) {
                                 //Set the user session
-                                session.loginUser(username,fullName);
+                                session.loginUser(email, fullName);
                                 loadDashboard();
 
                             }else if(response.getInt(KEY_STATUS) == 1){
-                                //Display error message if username is already existsing
-                                etUsername.setError("Username already taken!");
-                                etUsername.requestFocus();
+                                //Display error message if email is already existsing
+                                etEmail.setError("Email already taken!");
+                                etEmail.requestFocus();
 
                             }else{
                                 Toast.makeText(getApplicationContext(),
@@ -165,25 +173,24 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
 
         }
-        if (KEY_EMPTY.equals(username)) {
-            etUsername.setError("Username cannot be empty");
-            etUsername.requestFocus();
-            return false;
-        }
         if (KEY_EMPTY.equals(password)) {
             etPassword.setError("Password cannot be empty");
             etPassword.requestFocus();
             return false;
         }
-
-        if (KEY_EMPTY.equals(confirmPassword)) {
-            etConfirmPassword.setError("Confirm Password cannot be empty");
-            etConfirmPassword.requestFocus();
+        if (KEY_EMPTY.equals(email)) {
+            etEmail.setError("Email cannot be empty");
+            etEmail.requestFocus();
             return false;
         }
-        if (!password.equals(confirmPassword)) {
-            etConfirmPassword.setError("Password and Confirm Password does not match");
-            etConfirmPassword.requestFocus();
+        if (KEY_EMPTY.equals(studieretning)) {
+            etStudieretning.setError("Studieretning cannot be empty");
+            etStudieretning.requestFocus();
+            return false;
+        }
+        if (KEY_EMPTY.equals(year)) {
+            etYear.setError("Year cannot be empty");
+            etYear.requestFocus();
             return false;
         }
 

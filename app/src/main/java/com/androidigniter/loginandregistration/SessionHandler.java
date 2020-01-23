@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class SessionHandler {
     private static final String PREF_NAME = "UserSession";
-    private static final String KEY_USERNAME = "username";
+    private static final String KEY_EMAIL = "email";
     private static final String KEY_EXPIRES = "expires";
     private static final String KEY_FULL_NAME = "full_name";
     private static final String KEY_EMPTY = "";
@@ -27,12 +27,9 @@ public class SessionHandler {
 
     /**
      * Logs in the user by saving user details and setting session
-     *
-     * @param username
-     * @param fullName
      */
-    public void loginUser(String username, String fullName) {
-        mEditor.putString(KEY_USERNAME, username);
+    public void loginUser(String email, String fullName) {
+        mEditor.putString(KEY_EMAIL, email);
         mEditor.putString(KEY_FULL_NAME, fullName);
         Date date = new Date();
 
@@ -77,7 +74,7 @@ public class SessionHandler {
             return null;
         }
         User user = new User();
-        user.setUsername(mPreferences.getString(KEY_USERNAME, KEY_EMPTY));
+        user.setEmail(mPreferences.getString(KEY_EMAIL, KEY_EMPTY));
         user.setFullName(mPreferences.getString(KEY_FULL_NAME, KEY_EMPTY));
         user.setSessionExpiryDate(new Date(mPreferences.getLong(KEY_EXPIRES, 0)));
 
