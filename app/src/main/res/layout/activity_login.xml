@@ -17,13 +17,13 @@
         android:src="@drawable/ic_lock_outline_white" />
 
     <EditText
-        android:id="@+id/etLoginUsername"
+        android:id="@+id/etLoginEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@android:color/white"
-        android:hint="@string/username"
-        android:inputType="textPersonName"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
         android:padding="10dp" />
 
 
